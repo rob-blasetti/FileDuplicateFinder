@@ -1,7 +1,8 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+package Impletment;
+
+import Interface.FileDuplicateFinderContentReaderImp;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * Time: 3:52 PM
  * To change this template use File | Settings | File Templates.
  */
-public class FileDuplicateFinderReader {
+public class FileDuplicateFinderContentReader implements FileDuplicateFinderContentReaderImp {
     private String filePath;
 
     public void setFilePath(String filePath) {
@@ -20,26 +21,26 @@ public class FileDuplicateFinderReader {
     }
 
 
-    public FileDuplicateFinderReader(String filePath){
-        this.filePath=filePath;
+    public FileDuplicateFinderContentReader(String filePath) {
+        this.filePath = filePath;
 
     }
 
-    public List<String> readFile(){
+    public List<String> readFileContent() {
 
-        List<String>  fileContentList = new ArrayList<String>();
+        List<String> fileContentList = new ArrayList<String>();
 
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(this.filePath));
+
             String line;
-            while((line = bufferedReader.readLine())!=null) {
-                 fileContentList.add(line);
+            while ((line = bufferedReader.readLine()) != null) {
+                fileContentList.add(line);
 
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
 
         }
