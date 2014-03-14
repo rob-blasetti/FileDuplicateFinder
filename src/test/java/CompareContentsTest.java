@@ -1,3 +1,4 @@
+import Impletment.CompareContents;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,13 +15,13 @@ import java.util.List;
 public class CompareContentsTest {
 
     @Test
-    public void testCompare(){
-        List<String> list1=new ArrayList<String>();
-        List<String> list2=new ArrayList<String>();
+    public void testCompare() {
+        List<String> list1 = new ArrayList<String>();
+        List<String> list2 = new ArrayList<String>();
         list1.add("666");
         list2.add("666");
-        CompareContents compareContents=new CompareContents(list1,list2);
-         Assert.assertTrue(compareContents.compare());
+        CompareContents compareContents = new CompareContents(list1, list2);
+        Assert.assertTrue(compareContents.areContentSame());
 
 
     }
