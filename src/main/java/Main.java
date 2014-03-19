@@ -57,7 +57,7 @@ public class Main {
         for (String key : hash.keySet()) {
             if (hash.get(key).size() > 1) {
                 List<String> fileList = hash.get(key);
-                System.out.println("Hashing:" + key);
+                System.out.println("Hashing:" + key;);
                 for (String fileName : fileList) {
                     System.out.println(fileName);
                 }
