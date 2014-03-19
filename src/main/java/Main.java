@@ -1,14 +1,7 @@
 import HashingMD5.HashingMD5;
-import Impletment.CompareContents;
 import Impletment.CompareHashing;
-import Impletment.FileDuplicateFinderContentReader;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -48,7 +41,7 @@ public class Main {
         String path = sc.nextLine().trim();
 
         File file = new File(path);
-        HashingMD5 hashingMD5 = hashingMD5 = new HashingMD5();
+        HashingMD5 hashingMD5 = new HashingMD5();
 
         CompareHashing compareHashing = new CompareHashing();
 
