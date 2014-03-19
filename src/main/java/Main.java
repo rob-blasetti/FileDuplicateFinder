@@ -1,5 +1,6 @@
 import HashingMD5.HashingMD5;
 import Impletment.CompareContents;
+import Impletment.CompareHashing;
 import Impletment.FileDuplicateFinderContentReader;
 
 import java.io.File;
@@ -48,10 +49,10 @@ public class Main {
 
         File file = new File(path);
         HashingMD5 hashingMD5 = hashingMD5 = new HashingMD5();
-        HashMap<String, List<String>> hash = new HashMap<String, List<String>>();
 
+        CompareHashing compareHashing = new CompareHashing();
 
-        findDuplicatedFile(hash, file, hashingMD5);
+        HashMap<String, List<String>> hash = compareHashing.findDuplicatedFile(file, hashingMD5);
 
         for (String key : hash.keySet()) {
             if (hash.get(key).size() > 1) {
@@ -65,32 +66,5 @@ public class Main {
 
     }
 
-    public static void findDuplicatedFile(HashMap<String, List<String>> hashMap, File file, HashingMD5 hashingMD5) {
 
-        File files[] = file.listFiles();
-        for (File f : files) {
-
-            if (f.isDirectory()) {
-                findDuplicatedFile(hashMap, file, hashingMD5);
-            } else {
-                try {
-                    hashingMD5.setFile(new FileInputStream(f));
-                    String key = hashingMD5.generateHashCode();
-                    if (hashMap.containsKey(key)) {
-                        hashMap.get(key).add(f.getAbsolutePath());
-                    } else {
-                        List<String> list = new ArrayList<String>();
-                        list.add(f.getAbsolutePath());
-                        hashMap.put(key, list);
-                    }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        }
-
-
-    }
 }
