@@ -19,7 +19,7 @@ public class HashingMD5Test {
         try {
             String workingDir = System.getProperty("user.dir");
 
-            String filePath = workingDir + "/src/main/resources/";
+            String filePath = workingDir + "/src/main/resources/someArrays";
 
             file = new FileInputStream(filePath);
         } catch (FileNotFoundException e) {
