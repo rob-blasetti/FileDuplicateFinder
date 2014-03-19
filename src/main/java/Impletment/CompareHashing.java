@@ -26,7 +26,7 @@ public class CompareHashing {
         for (File f : files) {
 
             if (f.isDirectory()) {
-                findDuplicatedFile(file, hashingMD5);
+                findDuplicatedFile(f, hashingMD5);
             } else {
                 try {
                     hashingMD5.setFile(new FileInputStream(f));
