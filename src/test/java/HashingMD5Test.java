@@ -17,7 +17,11 @@ public class HashingMD5Test {
     public void setUp() {
         FileInputStream file = null;
         try {
-            file = new FileInputStream("/Users/leng/Desktop/someArrays");
+            String workingDir = System.getProperty("user.dir");
+
+            String filePath = workingDir + "/src/main/resources/";
+
+            file = new FileInputStream(filePath);
         } catch (FileNotFoundException e) {
 
             e.printStackTrace();
