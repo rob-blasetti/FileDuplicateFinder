@@ -46,6 +46,7 @@ public class HashingMD5Test {
 
     @Test
     public void checkFileIsTheSame() {
+
         Assert.assertEquals(hashingMD5.generateHashCode(), "9FC9253E2DBE5E53BD98AFB8BE477697".toLowerCase());
     }
 
