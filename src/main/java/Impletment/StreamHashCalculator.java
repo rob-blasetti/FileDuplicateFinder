@@ -1,27 +1,17 @@
-package HashingMD5;
+package Impletment;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by leng on 19/03/2014.
  */
-public class HashingMD5 {
-
-    private FileInputStream file;
+public class StreamHashCalculator {
 
 
-    public FileInputStream getFile() {
-        return file;
-    }
-
-    public void setFile(FileInputStream file) {
-        this.file = file;
-    }
-
-    public String generateHashCode() {
+    public String generateHashCode(InputStream inputStream) {
         String hash;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -29,7 +19,7 @@ public class HashingMD5 {
             byte[] dataBytes = new byte[1024];
 
             int nread = 0;
-            while ((nread = file.read(dataBytes)) != -1) {
+            while ((nread = inputStream.read(dataBytes)) != -1) {
                 md.update(dataBytes, 0, nread);
             }
             ;

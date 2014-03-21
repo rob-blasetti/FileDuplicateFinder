@@ -1,7 +1,5 @@
 package Impletment;
 
-import HashingMD5.HashingMD5;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,17 +18,16 @@ public class CompareHashing {
 
     }
 
-    public HashMap<String, List<String>> findDuplicatedFile(File file, HashingMD5 hashingMD5) {
+    public HashMap<String, List<String>> findDuplicatedFile(File file, StreamHashCalculator streamHashCalculator) {
 
         File files[] = file.listFiles();
         for (File f : files) {
 
             if (f.isDirectory()) {
-                findDuplicatedFile(f, hashingMD5);
+                findDuplicatedFile(f, streamHashCalculator);
             } else {
                 try {
-                    hashingMD5.setFile(new FileInputStream(f));
-                    String key = hashingMD5.generateHashCode();
+                    String key = streamHashCalculator.generateHashCode(new FileInputStream(f));
                     if (hashMap.containsKey(key)) {
                         hashMap.get(key).add(f.getAbsolutePath());
                     } else {
