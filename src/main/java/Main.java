@@ -1,9 +1,7 @@
+import Impletment.CompareFileWithHashingCode;
 import Impletment.StreamHashCalculator;
-import Impletment.CompareHashing;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -45,9 +43,9 @@ public class Main {
         File file = new File(path);
         StreamHashCalculator streamHashCalculator = new StreamHashCalculator();
 
-        CompareHashing compareHashing = new CompareHashing();
+        CompareFileWithHashingCode compareFileWithHashingCode = new CompareFileWithHashingCode();
 
-        HashMap<String, List<String>> hash = compareHashing.findDuplicatedFile(file, streamHashCalculator);
+        HashMap<String, List<String>> hash = compareFileWithHashingCode.findDuplicatedFile(file, streamHashCalculator);
 
         for (String key : hash.keySet()) {
             if (hash.get(key).size() > 1) {

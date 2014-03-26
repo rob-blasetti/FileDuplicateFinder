@@ -10,10 +10,10 @@ import java.util.List;
 /**
  * Created by leng on 19/03/2014.
  */
-public class CompareHashing {
+public class CompareFileWithHashingCode {
     private HashMap<String, List<String>> hashMap;
 
-    public CompareHashing() {
+    public CompareFileWithHashingCode() {
         hashMap = new HashMap<String, List<String>>();
 
     }
