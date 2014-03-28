@@ -58,23 +58,19 @@ public class CompareFileWithArrayPathTest {
     }
 
     @Test
-    public void shouldReturnFilenamesOfFilesThatAreDuplicatesOfEachOther() throws FileNotFoundException {
-
+    public void shouldReturnGroupofFileNamesThatAreDuplicatesOfEachOther() throws FileNotFoundException {
         String[] filePaths = new String[]{
                 pathsWithContent1[0],
                 pathsWithContent1[1],
-                pathsWithContent2[0],
                 pathsWithContent1[2],
+                pathsWithContent2[1],
+                pathsWithContent2[0]
         };
+        Assert.assertEquals(compareFileWithArrayPath.compareFiles(filePaths).size(), 2);
 
-        Assert.assertEquals(compareFileWithArrayPath.compareFiles(filePaths).size(), 3);
+
     }
 
-    @Test
-    @Ignore
-    public void shouldGetRuntimeExceptionIfFileDoesNotExist() {
-        Assert.fail("TODO");
-    }
 
     @Test
     public void shouldReturnNullWhenFilesAreNotDuplicateOfEachOther() throws FileNotFoundException {

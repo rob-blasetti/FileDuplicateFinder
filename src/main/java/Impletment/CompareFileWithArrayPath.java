@@ -6,6 +6,7 @@ import Interface.FileStreamOpener;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 /**
@@ -19,26 +20,7 @@ public class CompareFileWithArrayPath {
         this.fileStreamOpener = fileStreamOpener;
     }
 
-    public ArrayList<String> compareFiles(String[] arrayPath) throws FileNotFoundException {
-
-//        StreamHashCalculator streamHashCalculator = new StreamHashCalculator();
-//        String[] hashCodes = new String[arrayPath.length];
-//        for (int i = 0; i < arrayPath.length; i++) {
-//            FileInputStream fileInputStream = new FileInputStream(arrayPath[i]);
-//            hashCodes[i] = streamHashCalculator.generateHashCode(fileInputStream);
-//        }
-//        ArrayList<String> result = new ArrayList<String>();
-//        for (int i = 0; i < hashCodes.length - 1; i++) {
-//            for (int j = 1; j < hashCodes.length; j++) {
-//                if (i != j) {
-//                    if (hashCodes[i].equals(hashCodes[j])) {
-//                        result.add(arrayPath[i]);
-//                        result.add(arrayPath[j]);
-//                    }
-//                }
-//            }
-//        }
-//        if (result.size() > 0) return result;
+    public HashMap<String, ArrayList<String>> compareFiles(String[] arrayPath) throws FileNotFoundException {
 
         Hashtable<String, ArrayList<String>> hashToPathsMap = new Hashtable<String, ArrayList<String>>();
 
@@ -50,9 +32,13 @@ public class CompareFileWithArrayPath {
             hashToPathsMap.get(hash).add(path);
         }
 
+        HashMap<String, ArrayList<String>> dupllicatedFilesToDictionary = new HashMap<String, ArrayList<String>>();
         for (String hash : hashToPathsMap.keySet()) {
             if (hashToPathsMap.get(hash).size() > 1)
-                return hashToPathsMap.get(hash);
+                dupllicatedFilesToDictionary.put(hash, hashToPathsMap.get(hash));
+        }
+        if (dupllicatedFilesToDictionary.size() > 0) {
+            return dupllicatedFilesToDictionary;
         }
 
         return null;
@@ -63,7 +49,7 @@ public class CompareFileWithArrayPath {
         return calculateHash(stream);
     }
 
-    protected InputStream openFileStream(String path) {
+    private InputStream openFileStream(String path) {
         return fileStreamOpener.open(path);
     }
 
