@@ -1,4 +1,4 @@
-package Interface;
+package duplicateFinder;
 
 import java.util.ArrayList;
 import java.util.HashMap;

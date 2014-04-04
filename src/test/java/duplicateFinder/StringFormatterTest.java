@@ -1,4 +1,6 @@
-import Impletment.StringFormatter;
+package duplicateFinder;
+
+import duplicateFinder.StringFormatter;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,5 +40,14 @@ public class StringFormatterTest {
       Assert.assertTrue(formatResult.equals(expectedResult));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenInputIsNull() {
+        stringFormatter.formatData(null);
+    }
 
+    @Test
+    public void shouldReturnEmptyStringWhenInputIsEmpty() {
+        String result = stringFormatter.formatData(new HashMap<String, ArrayList<String>>());
+        Assert.assertEquals("", result);
+    }
 }

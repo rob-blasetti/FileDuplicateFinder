@@ -1,5 +1,6 @@
-import Impletment.StringOutputter;
-import com.sun.source.tree.AssertTree;
+package duplicateFinder;
+
+import duplicateFinder.StringOutputter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

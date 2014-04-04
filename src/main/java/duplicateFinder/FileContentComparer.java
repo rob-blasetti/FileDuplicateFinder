@@ -1,7 +1,5 @@
-package Impletment;
+package duplicateFinder;
 
-
-import Interface.FileStreamOpener;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -12,19 +10,19 @@ import java.util.Hashtable;
 /**
  * Created by leng on 26/03/2014.
  */
-public class CompareFileWithArrayPath {
+public class FileContentComparer {
 
     private final FileStreamOpener fileStreamOpener;
 
-    public CompareFileWithArrayPath(FileStreamOpener fileStreamOpener) {
+    public FileContentComparer(FileStreamOpener fileStreamOpener) {
         this.fileStreamOpener = fileStreamOpener;
     }
 
-    public HashMap<String, ArrayList<String>> compareFiles(String[] arrayPath) throws FileNotFoundException {
+    public HashMap<String, ArrayList<String>> compareFiles(String[] filePaths) throws FileNotFoundException {
 
         Hashtable<String, ArrayList<String>> hashToPathsMap = new Hashtable<String, ArrayList<String>>();
 
-        for (String path : arrayPath) {
+        for (String path : filePaths) {
             String hash = calculateHash(path);
             if (!hashToPathsMap.containsKey(hash)) {
                 hashToPathsMap.put(hash, new ArrayList<String>());

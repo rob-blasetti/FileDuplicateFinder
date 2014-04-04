@@ -1,12 +1,12 @@
-import Impletment.CompareFileWithArrayPath;
-import Interface.FileStreamOpener;
+package duplicateFinder;
+
+import duplicateFinder.FileContentComparer;
+import duplicateFinder.FileStreamOpener;
 import junit.framework.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.stub;
 import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayInputStream;
@@ -16,8 +16,8 @@ import java.io.InputStream;
 /**
  * Created by leng on 26/03/2014.
  */
-public class CompareFileWithArrayPathTest {
-    private CompareFileWithArrayPath compareFileWithArrayPath;
+public class FileContentComparerTest {
+    private FileContentComparer fileContentComparer;
     FileStreamOpener fileStreamOpener;
 
     String content1 = "some content";
@@ -53,7 +53,7 @@ public class CompareFileWithArrayPathTest {
             when(fileStreamOpener.open(pathsWithContent2[i])).thenReturn(streamsWithContent2[i]);
         }
 
-        compareFileWithArrayPath = new CompareFileWithArrayPath(fileStreamOpener);
+        fileContentComparer = new FileContentComparer(fileStreamOpener);
 
     }
 
@@ -66,7 +66,7 @@ public class CompareFileWithArrayPathTest {
                 pathsWithContent2[1],
                 pathsWithContent2[0]
         };
-        Assert.assertEquals(compareFileWithArrayPath.compareFiles(filePaths).size(), 2);
+        Assert.assertEquals(fileContentComparer.compareFiles(filePaths).size(), 2);
 
 
     }
@@ -80,6 +80,6 @@ public class CompareFileWithArrayPathTest {
                 pathsWithContent2[0],
         };
 
-        Assert.assertEquals(compareFileWithArrayPath.compareFiles(arrayPath2), null);
+        Assert.assertEquals(fileContentComparer.compareFiles(arrayPath2), null);
     }
 }

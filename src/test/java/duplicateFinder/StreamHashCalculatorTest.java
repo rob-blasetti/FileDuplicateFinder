@@ -1,11 +1,11 @@
-import Impletment.StreamHashCalculator;
+package duplicateFinder;
+
+import duplicateFinder.StreamHashCalculator;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 /**
  * Created by leng on 19/03/2014.

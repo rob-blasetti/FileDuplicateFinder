@@ -1,4 +1,4 @@
-package Interface;
+package duplicateFinder;
 
 /**
  * Created by leng on 2/04/2014.

@@ -1,4 +1,4 @@
-package Interface;
+package duplicateFinder;
 
 import java.io.InputStream;
 
