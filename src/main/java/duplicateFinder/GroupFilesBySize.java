@@ -19,13 +19,12 @@ public class GroupFilesBySize {
         groupedFileByItsSizeFromGivenPath = new HashMap<String, ArrayList<String>>();
     }
 
-    public HashMap<String, ArrayList<String>> scanDirectoryWithGivenPath(String path) {
+    public HashMap<String, ArrayList<String>> scanDirectoryWithGivenPath(File files) {
 
-        if (path == null || path.trim().equals("")) {
+        if (files == null) {
             return null;
         }
-        File file=new File(path);
-        scanThroughDirectoryWithGivenFile(file);
+        scanThroughDirectoryWithGivenFile(files);
 
         return  groupedFileByItsSizeFromGivenPath;
     }
@@ -44,9 +43,7 @@ public class GroupFilesBySize {
                     ArrayList<String> listOfFilePaths= new ArrayList<String>();
                     listOfFilePaths.add(f.getAbsolutePath());
                     groupedFileByItsSizeFromGivenPath.put(fileSizeAsKey,listOfFilePaths);
-
                 }
-
              }
 
          }

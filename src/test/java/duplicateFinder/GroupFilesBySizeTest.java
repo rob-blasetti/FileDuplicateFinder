@@ -4,6 +4,14 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created with IntelliJ IDEA.
  * User: user
@@ -15,21 +23,52 @@ import org.junit.Test;
 
 public class GroupFilesBySizeTest {
     private GroupFilesBySize groupFilesBySize;
+    private String content1 = "working with mock";
+    private File mockFile;
 
     @Before
     public void setUp(){
        groupFilesBySize=new GroupFilesBySize();
+        mockFile = mock(File.class);
+        when(mockFile.getAbsolutePath()).thenReturn("/User/mockdir");
+        File files[] = new File[5];
+        for (int i = 0; i < 5; i++) {
+            if (i < 2) {
+                File temporaryFile = mock(File.class);
+                when(temporaryFile.length()).thenReturn(Long.parseLong("12"));
+                when(temporaryFile.getAbsolutePath()).thenReturn("/User/mockdir/file1");
+                files[i] = temporaryFile;
+            } else {
+                File temporaryFile = mock(File.class);
+                when(temporaryFile.length()).thenReturn(Long.parseLong("13"));
+                when(temporaryFile.getAbsolutePath()).thenReturn("/User/mockdir/file1" + i);
+                files[i] = temporaryFile;
+
+
+            }
+        }
+        when(mockFile.listFiles()).thenReturn(files);
+
+
     }
 
     @Test
     public void shouldGroupFilesBySizeReturnExpectedDictionary(){
 
-      Assert.assertEquals(groupFilesBySize.scanDirectoryWithGivenPath("/Users/user/Desktop/dir/").size(),3);
+        HashMap<String, ArrayList<String>> result = groupFilesBySize.scanDirectoryWithGivenPath(mockFile);
+        for (String key : result.keySet()) {
+            System.out.println("========= :" + key);
+            for (String path : result.get(key)) {
+                System.out.println(path);
+            }
+        }
+
+        Assert.assertEquals(groupFilesBySize.scanDirectoryWithGivenPath(mockFile).size(), 2);
 
     }
     @Test
     public void shouldGroupFileBySizeReturnNullWhenEmptyPathIsGiven(){
-       Assert.assertEquals(groupFilesBySize.scanDirectoryWithGivenPath(" "),null);
+        Assert.assertEquals(groupFilesBySize.scanDirectoryWithGivenPath(null), null);
     }
 
 }
