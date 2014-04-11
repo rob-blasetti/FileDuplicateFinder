@@ -7,7 +7,6 @@ import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,14 +20,14 @@ import java.util.HashMap;
  */
 
 
-public class GroupFilesBySizeTest {
-    private GroupFilesBySize groupFilesBySize;
+public class FileClassifierBySizeTest {
+    private FileClassifierBySize fileClassifierBySize;
     private String content1 = "working with mock";
     private File mockFile;
 
     @Before
-    public void setUp(){
-       groupFilesBySize=new GroupFilesBySize();
+    public void setUp() {
+        fileClassifierBySize = new FileClassifierBySize();
         mockFile = mock(File.class);
         when(mockFile.getAbsolutePath()).thenReturn("/User/mockdir");
         File files[] = new File[5];
@@ -53,9 +52,9 @@ public class GroupFilesBySizeTest {
     }
 
     @Test
-    public void shouldGroupFilesBySizeReturnExpectedDictionary(){
+    public void shouldGroupFilesBySizeReturnExpectedDictionary() {
 
-        HashMap<String, ArrayList<String>> result = groupFilesBySize.scanDirectoryWithGivenPath(mockFile);
+        HashMap<String, ArrayList<String>> result = fileClassifierBySize.scanDirectory(mockFile);
         for (String key : result.keySet()) {
             System.out.println("========= :" + key);
             for (String path : result.get(key)) {
@@ -63,12 +62,13 @@ public class GroupFilesBySizeTest {
             }
         }
 
-        Assert.assertEquals(groupFilesBySize.scanDirectoryWithGivenPath(mockFile).size(), 2);
+        Assert.assertEquals(fileClassifierBySize.scanDirectory(mockFile).size(), 2);
 
     }
+
     @Test
-    public void shouldGroupFileBySizeReturnNullWhenEmptyPathIsGiven(){
-        Assert.assertEquals(groupFilesBySize.scanDirectoryWithGivenPath(null), null);
+    public void shouldGroupFileBySizeReturnNullWhenEmptyPathIsGiven() {
+        Assert.assertEquals(fileClassifierBySize.scanDirectory(null), null);
     }
 
 }
