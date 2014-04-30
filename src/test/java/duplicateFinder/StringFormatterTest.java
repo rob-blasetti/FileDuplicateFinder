@@ -14,36 +14,34 @@ import java.util.HashMap;
 public class StringFormatterTest {
     private String expectedResult;
     private StringFormatter stringFormatter;
-    private HashMap<String,ArrayList<String>> duplicatedFilePaths;
+    private HashMap<String, ArrayList<String>> duplicatedFilePaths;
+
     @Before
-    public void  setup(){
-        duplicatedFilePaths=new HashMap<String, ArrayList<String>>();
-        ArrayList<String> list1=new ArrayList<String>();
+    public void setup() {
+        duplicatedFilePaths = new HashMap<String, ArrayList<String>>();
+        ArrayList<String> list1 = new ArrayList<String>();
         list1.add("Path1");
         list1.add("Path2");
 
-        ArrayList<String> list2=new ArrayList<String>();
+        ArrayList<String> list2 = new ArrayList<String>();
         list2.add("Path3");
         list2.add("Path4");
-        duplicatedFilePaths.put("key1",list1 );
-        duplicatedFilePaths.put("key2",list2);
+        duplicatedFilePaths.put("key1", list1);
+        duplicatedFilePaths.put("key2", list2);
 
-        expectedResult="=====================================================\nPath3\nPath4\n";
-        expectedResult+="=====================================================\nPath1\nPath2\n";
-        stringFormatter=new StringFormatter();
+        expectedResult = "=====================================================\nPath3\nPath4\n";
+        expectedResult += "=====================================================\nPath1\nPath2\n";
+        stringFormatter = new StringFormatter();
 
     }
+
     @Test
-    public void shouldTheStringFormatterReturnExpectedResult(){
+    public void shouldTheStringFormatterReturnExpectedResult() {
 
-      String formatResult=stringFormatter.formatData(duplicatedFilePaths);
-      Assert.assertTrue(formatResult.equals(expectedResult));
+        String formatResult = stringFormatter.formatData(duplicatedFilePaths);
+        Assert.assertTrue(formatResult.equals(expectedResult));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionWhenInputIsNull() {
-        stringFormatter.formatData(null);
-    }
 
     @Test
     public void shouldReturnEmptyStringWhenInputIsEmpty() {
