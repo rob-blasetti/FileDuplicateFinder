@@ -11,7 +11,7 @@ public class StringFormatter implements Formatter {
     @Override
     public String formatData(HashMap<String, ArrayList<String>> dupllicatedFilePaths) {
         if (dupllicatedFilePaths == null)
-            throw new IllegalArgumentException("Duplicated file paths are null.");
+            return null;
 
         StringBuilder formatString = new StringBuilder();
 

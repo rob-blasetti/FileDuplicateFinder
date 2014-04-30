@@ -37,7 +37,7 @@ public class FileContentComparerTest {
     InputStream[] streamsWithContent2;
 
     @Before
-    public void setUp() {
+    public void setUp() throws FileNotFoundException {
 
         fileStreamOpener = mock(FileStreamOpener.class);
         streamsWithContent1 = new InputStream[pathsWithContent1.length];

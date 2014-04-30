@@ -10,14 +10,15 @@ import java.util.Scanner;
  * To change this template use File | Settings | File Templates.
  */
 public class PathInput {
-    public PathInput(){
+    public PathInput() {
         requestInput();
     }
-    private void requestInput(){
+
+    private void requestInput() {
         System.out.println("Enter the folder to scan for duplicates:");
     }
 
-    public String userPathInput(){
+    public String getUserPath() {
         Scanner sc = new Scanner(System.in);
         String path = sc.nextLine();
         return path;

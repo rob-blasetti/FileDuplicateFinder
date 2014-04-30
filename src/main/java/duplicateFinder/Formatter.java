@@ -8,5 +8,5 @@ import java.util.HashMap;
  */
 public interface Formatter {
 
-    String formatData(HashMap <String, ArrayList<String>> dupllicatedFilePaths);
+    String formatData(HashMap<String, ArrayList<String>> dupllicatedFilePaths);
 }

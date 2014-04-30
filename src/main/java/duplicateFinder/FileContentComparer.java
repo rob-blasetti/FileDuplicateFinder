@@ -42,12 +42,12 @@ public class FileContentComparer {
         return null;
     }
 
-    private String calculateHash(String path) {
+    private String calculateHash(String path) throws FileNotFoundException {
         InputStream stream = openFileStream(path);
         return calculateHash(stream);
     }
 
-    private InputStream openFileStream(String path) {
+    private InputStream openFileStream(String path) throws FileNotFoundException {
         return fileStreamOpener.open(path);
     }
 
