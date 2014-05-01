@@ -19,7 +19,7 @@ public class DuplicateFinder {
     private Outputter outputter;
 
 
-    public DuplicateFinder() throws FileNotFoundException {
+    public DuplicateFinder() {
 
         pathInput = new PathInput();
         fileSizeReader = new FileSizeReader();
@@ -32,16 +32,18 @@ public class DuplicateFinder {
         formatter = new StringFormatter();
         outputter = new ScreenOutput();
 
+    }
+
+    public void scan() throws FileNotFoundException {
         Map<String, ArrayList<String>> dictionaryOfFileClassifiedBySize = fileClassifierBySize2.scanDirectory(pathInput.getUserPath());
 
         for (String key : dictionaryOfFileClassifiedBySize.keySet()) {
             outputter.writeLine(key + " bytes");
             ArrayList<String> arrayListOfPath = dictionaryOfFileClassifiedBySize.get(key);
-            HashMap<String, ArrayList<String>> dictionaryOfDuplicateFiles = fileContentComparer.compareFiles(arrayListOfPath.toArray(new String[arrayListOfPath.size()]));
+            HashMap<String, ArrayList<String>> dictionaryOfDuplicateFiles =
+                    fileContentComparer.compareFiles(arrayListOfPath.toArray(new String[arrayListOfPath.size()]));
             String result = formatter.formatData(dictionaryOfDuplicateFiles);
             outputter.writeLine(result);
         }
-
-
     }
 }

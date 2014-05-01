@@ -9,14 +9,8 @@ import org.junit.Test;
 public class DuplicateFinderTest {
 
     @Test
-    public void shouldReportDuplicateFiles() {
-//        StringOutputter outputter = new StringOutputter();
-//
-//        DuplicateFinder duplicateFinder = new DuplicateFinder(...);
-//
-//        duplicateFinder.findDuplicates();
-//
-//        Assert.assertEquals(expectedOutput, outputter.getResult());
+    public void shouldScanMethodReturnDuplicateFiles() {
+
     }
 
 }
