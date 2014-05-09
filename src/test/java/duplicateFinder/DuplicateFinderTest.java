@@ -3,7 +3,7 @@ package duplicateFinder;
 import junit.framework.Assert;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
