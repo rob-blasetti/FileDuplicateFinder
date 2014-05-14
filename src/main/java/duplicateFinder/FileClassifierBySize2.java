@@ -23,7 +23,9 @@ public class FileClassifierBySize2 {
         List<String> paths = pathScanner.getPaths(directory);
 
         for (String path : paths) {
-            classifyPath(path, result);
+            if (path.indexOf(".DS_Store") == -1) {
+                classifyPath(path, result);
+            }
         }
 
         return result;

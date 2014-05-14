@@ -4,9 +4,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -14,7 +12,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by leng on 2/05/2014.
  */
-public class DuplicateFinderFunctionalTest {
+public class DuplicateFinderPrintProcessorFunctionalTest {
     @Test
     public void shouldScanMethodReturnDuplicateFiles() throws Exception {
         //Mock
@@ -44,10 +42,9 @@ public class DuplicateFinderFunctionalTest {
         FileClassifierBySize2 fileClassifierBySize = new FileClassifierBySize2(pathScanner, fileSizeReader);
         FileContentComparer fileContentComparer = new FileContentComparer(fileStreamOpener);
 
-//        fileContentComparer.compareFiles(filePaths.toArray(new String[filePaths.size()]));
 
-        DuplicateFinder duplicateFinder = new DuplicateFinder(outputter, fileClassifierBySize, fileContentComparer);
-        duplicateFinder.scan("/directory/test");
+        DuplicateFinderPrintProcessor duplicateFinderPrintProcessor = new DuplicateFinderPrintProcessor(outputter, fileClassifierBySize, fileContentComparer);
+        duplicateFinderPrintProcessor.execute("/directory/test");
 
 
         System.out.print(outputter.getResult());

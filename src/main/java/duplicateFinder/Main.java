@@ -3,15 +3,17 @@ package duplicateFinder;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        PathInput pathInput = new PathInput();
-        String pathToScan = pathInput.getUserPath();
+        String pathToScan = args[0];
 
         ScreenOutput outputter = new ScreenOutput();
         FileClassifierBySize2 fileClassifierBySize = new FileClassifierBySize2(new PathScanner(), new FileSizeReader());
         FileContentComparer fileContentComparer = new FileContentComparer(new FileStreamOpenerImplement());
+//
+//        DuplicateFinderPrintProcessor duplicateFinderPrintProcessor = new DuplicateFinderPrintProcessor(outputter, fileClassifierBySize, fileContentComparer);
+//        duplicateFinderPrintProcessor.execute(pathToScan);
 
-        DuplicateFinder duplicateFinder = new DuplicateFinder(outputter, fileClassifierBySize, fileContentComparer);
-        duplicateFinder.scan(pathToScan);
+        DuplicateFinderDeleteProcessor duplicateFinderDeleteProcessor = new DuplicateFinderDeleteProcessor(outputter, fileClassifierBySize, fileContentComparer, new DeleteFile());
+        duplicateFinderDeleteProcessor.execute(pathToScan);
     }
 
 }

@@ -3,24 +3,22 @@ package duplicateFinder;
 import junit.framework.Assert;
 import org.junit.Test;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Created by leng on 30/04/2014.
+ * Created by leng on 14/05/2014.
  */
-public class DuplicateFinderTest {
+public class DuplicateFinderDeleteProcessorTest {
 
     @Test
-    public void shouldScanMethodReturnDuplicateFiles() throws Exception {
+    public void shouldExecuteMethodDeleteDuplicateFile() throws Exception {
         // Setup
         StringOutputter outputter = new StringOutputter();
+        DeleteFile deleteFile = new DeleteFile();
         FileClassifierBySize2 fileClassifierBySize = mock(FileClassifierBySize2.class);
         FileContentComparer fileContentComparer = mock(FileContentComparer.class);
 
@@ -39,18 +37,16 @@ public class DuplicateFinderTest {
         when(fileContentComparer.compareFiles(filePaths.toArray(new String[filePaths.size()]))).thenReturn(dictionaryOfFileClassifiedByHash);
 
 
-        DuplicateFinder duplicateFinder = new DuplicateFinder(outputter, fileClassifierBySize, fileContentComparer);
+        DuplicateFinderDeleteProcessor duplicateFinderDeleteProcessor = new DuplicateFinderDeleteProcessor(outputter, fileClassifierBySize, fileContentComparer, deleteFile);
 
         // Action
-        duplicateFinder.scan("/path/to/test-data");
+        duplicateFinderDeleteProcessor.execute("/path/to/test-data");
 
         // Assertion
         String expectedOutput = "=====================================================\n" +
-                "/path/to/test-data/1.png\n" +
-                "/path/to/test-data/2.png\n";
+                "/path/to/test-data/1.png\n";
+        System.out.print(outputter.getResult());
 
         Assert.assertEquals(expectedOutput, outputter.getResult());
-
     }
-
 }

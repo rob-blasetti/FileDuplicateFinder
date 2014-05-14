@@ -37,7 +37,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>duplicateFinder.Main</mainClass>
+                            <mainClass>duplicateFinderPrintProcessor.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

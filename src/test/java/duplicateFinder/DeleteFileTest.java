@@ -22,8 +22,6 @@ public class DeleteFileTest {
         File file = mock(File.class);
         when(file.delete()).thenReturn(true);
 
-//        FileOpener fileOpener=new FileOpenerImplement();
-//        File file=fileOpener.open("/Users/leng/Desktop/bike.avi");
         Assert.assertTrue(deleteFile.delete(file));
 
     }

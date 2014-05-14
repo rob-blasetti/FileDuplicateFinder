@@ -8,19 +8,20 @@ import java.util.Map;
 /**
  * Created by leng on 30/04/2014.
  */
-public class DuplicateFinder {
+public class DuplicateFinderPrintProcessor implements DuplicateFinderProcessor {
     private FileClassifierBySize2 fileClassifierBySize2;
     private FileContentComparer fileContentComparer;
     private Outputter outputter;
 
 
-    public DuplicateFinder(Outputter outputter, FileClassifierBySize2 fileClassifierBySize, FileContentComparer fileContentComparer) {
+    public DuplicateFinderPrintProcessor(Outputter outputter, FileClassifierBySize2 fileClassifierBySize, FileContentComparer fileContentComparer) {
         this.fileClassifierBySize2 = fileClassifierBySize;
         this.fileContentComparer = fileContentComparer;
         this.outputter = outputter;
     }
 
-    public void scan(String pathToScan) throws FileNotFoundException {
+    @Override
+    public void execute(String pathToScan) throws FileNotFoundException {
         Map<String, ArrayList<String>> dictionaryOfFileClassifiedBySize = fileClassifierBySize2.scanDirectory(pathToScan);
 
         for (String key : dictionaryOfFileClassifiedBySize.keySet()) {
