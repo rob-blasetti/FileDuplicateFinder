@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by leng on 2/05/2014.
  */
-public class DuplicateFinderPrintProcessorFunctionalTest {
+public class DuplicateFinderFunctionalTest {
     @Test
     public void shouldScanMethodReturnDuplicateFiles() throws Exception {
         //Mock
@@ -39,15 +39,14 @@ public class DuplicateFinderPrintProcessorFunctionalTest {
 
         // Wire-up
         StringOutputter outputter = new StringOutputter();
-        FileClassifierBySize2 fileClassifierBySize = new FileClassifierBySize2(pathScanner, fileSizeReader);
+        DuplicateFinderProcessor duplicateFinderProcessor = new DuplicateFinderPrintProcessor(outputter);
+        FileClassifierBySize fileClassifierBySize = new FileClassifierBySize(pathScanner, fileSizeReader);
         FileContentComparer fileContentComparer = new FileContentComparer(fileStreamOpener);
 
 
-        DuplicateFinderPrintProcessor duplicateFinderPrintProcessor = new DuplicateFinderPrintProcessor(outputter, fileClassifierBySize, fileContentComparer);
-        duplicateFinderPrintProcessor.execute("/directory/test");
+        DuplicateFinder duplicateFinder = new DuplicateFinder(duplicateFinderProcessor, fileClassifierBySize, fileContentComparer);
+        duplicateFinder.scan("/directory/test");
 
-
-        System.out.print(outputter.getResult());
 
         String expectedResult = "=====================================================\n" +
                 "/directory/test/file1.txt\n" +

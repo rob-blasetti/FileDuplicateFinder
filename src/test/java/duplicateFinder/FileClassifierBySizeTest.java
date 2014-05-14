@@ -4,71 +4,57 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
- * Created with IntelliJ IDEA.
- * User: user
- * Date: 9/04/2014
- * Time: 9:27 AM
- * To change this template use File | Settings | File Templates.
+ * Created by leng on 11/04/2014.
  */
-
-
 public class FileClassifierBySizeTest {
-    private FileClassifierBySize fileClassifierBySize;
-    private String content1 = "working with mock";
-    private File mockFile;
+    FileSizeReader fileSizeReader;
+    PathScanner pathScanner;
 
     @Before
     public void setUp() {
-        fileClassifierBySize = new FileClassifierBySize();
-        mockFile = mock(File.class);
-        when(mockFile.getAbsolutePath()).thenReturn("/User/mockdir");
-        File files[] = new File[5];
-        for (int i = 0; i < 5; i++) {
+        fileSizeReader = mock(FileSizeReader.class);
+        pathScanner = mock(PathScanner.class);
+        List<String> paths = new ArrayList<String>();
+        paths.add("/path1/file1");
+        paths.add("/path1/file2");
+        paths.add("/path1/p/file3");
+        paths.add("/path1/p/file4");
+        when(pathScanner.getPaths("/path1")).thenReturn(paths);
+        for (int i = 0; i < pathScanner.getPaths("/path1").size(); i++) {
             if (i < 2) {
-                File temporaryFile = mock(File.class);
-                when(temporaryFile.length()).thenReturn(Long.parseLong("12"));
-                when(temporaryFile.getAbsolutePath()).thenReturn("/User/mockdir/file1");
-                files[i] = temporaryFile;
+                when(fileSizeReader.readSize(paths.get(i))).thenReturn(Long.parseLong("123"));
             } else {
-                File temporaryFile = mock(File.class);
-                when(temporaryFile.length()).thenReturn(Long.parseLong("13"));
-                when(temporaryFile.getAbsolutePath()).thenReturn("/User/mockdir/file1" + i);
-                files[i] = temporaryFile;
-
-
+                when(fileSizeReader.readSize(paths.get(i))).thenReturn(Long.parseLong("1235"));
             }
-        }
-        when(mockFile.listFiles()).thenReturn(files);
 
+        }
 
     }
 
     @Test
-    public void shouldGroupFilesBySizeReturnExpectedDictionary() {
+    public void shouldClassifyFilesInFolderBySize() {
 
-        HashMap<String, ArrayList<String>> result = fileClassifierBySize.scanDirectory(mockFile);
-        for (String key : result.keySet()) {
-            System.out.println("========= :" + key);
-            for (String path : result.get(key)) {
-                System.out.println(path);
-            }
-        }
 
-        Assert.assertEquals(fileClassifierBySize.scanDirectory(mockFile).size(), 2);
+        FileClassifierBySize fileClassifierBySize = new FileClassifierBySize(pathScanner, fileSizeReader);
 
+        HashMap<String, ArrayList<String>> result = fileClassifierBySize.scanDirectory("/path1");
+
+        Assert.assertEquals(2, result.size());
+
+        String size1 = "123";
+        Assert.assertEquals("/path1/file1", result.get(size1).get(0));
+        Assert.assertEquals("/path1/file2", result.get(size1).get(1));
+
+        String size2 = "1235";
+        Assert.assertEquals("/path1/p/file3", result.get(size2).get(0));
+        Assert.assertEquals("/path1/p/file4", result.get(size2).get(1));
     }
-
-    @Test
-    public void shouldGroupFileBySizeReturnNullWhenEmptyPathIsGiven() {
-        Assert.assertEquals(fileClassifierBySize.scanDirectory(null), null);
-    }
-
 }

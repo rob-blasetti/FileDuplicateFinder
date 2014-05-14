@@ -2,50 +2,41 @@ package duplicateFinder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.File;
+import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: user
- * Date: 9/04/2014
- * Time: 9:27 AM
- * To change this template use File | Settings | File Templates.
+ * Created by leng on 11/04/2014.
  */
 public class FileClassifierBySize {
-    private HashMap<String, ArrayList<String>> fileSizeToFilePathsMap;
 
-    public FileClassifierBySize() {
-        fileSizeToFilePathsMap = new HashMap<String, ArrayList<String>>();
+    private PathScanner pathScanner;
+    private FileSizeReader fileSizeReader;
+
+    public FileClassifierBySize(PathScanner pathScanner, FileSizeReader fileSizeReader) {
+        this.pathScanner = pathScanner;
+        this.fileSizeReader = fileSizeReader;
     }
 
-    public HashMap<String, ArrayList<String>> scanDirectory(File files) {
+    public HashMap<String, ArrayList<String>> scanDirectory(String directory) {
+        HashMap<String, ArrayList<String>> result = new HashMap<String, ArrayList<String>>();
 
-        if (files == null) {
-            return null;
-        }
-        scanThroughDirectoryWithGivenFile(files);
+        List<String> paths = pathScanner.getPaths(directory);
 
-        return fileSizeToFilePathsMap;
-    }
-
-    private void scanThroughDirectoryWithGivenFile(File folder) {
-        File files[] = folder.listFiles();
-        for (File f : files) {
-            if (f.isDirectory()) {
-                scanThroughDirectoryWithGivenFile(f);
-            } else {
-                long fileSize = f.length();
-                String fileSizeAsKey = fileSize + "";
-                if (fileSizeToFilePathsMap.containsKey(fileSizeAsKey)) {
-                    fileSizeToFilePathsMap.get(fileSizeAsKey).add(f.getAbsolutePath());
-                } else {
-                    ArrayList<String> listOfFilePaths = new ArrayList<String>();
-                    listOfFilePaths.add(f.getAbsolutePath());
-                    fileSizeToFilePathsMap.put(fileSizeAsKey, listOfFilePaths);
-                }
+        for (String path : paths) {
+            if (path.indexOf(".DS_Store") == -1) {
+                classifyPath(path, result);
             }
-
         }
 
+        return result;
+    }
+
+    private void classifyPath(String path, HashMap<String, ArrayList<String>> result) {
+        long size = fileSizeReader.readSize(path);
+        String sizeAsString = String.valueOf(size);
+        if (!result.containsKey(sizeAsString)) {
+            result.put(sizeAsString, new ArrayList<String>());
+        }
+        result.get(sizeAsString).add(path);
     }
 }

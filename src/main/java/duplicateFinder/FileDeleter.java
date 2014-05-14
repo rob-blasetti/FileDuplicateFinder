@@ -7,7 +7,7 @@ import java.io.File;
 /**
  * Created by leng on 9/05/2014.
  */
-public class DeleteFile {
+public class FileDeleter {
 
 
     public boolean delete(File file) {

@@ -15,7 +15,7 @@ public class PathInput {
     }
 
     private void requestInput() {
-        System.out.println("Enter the folder to execute for duplicates:");
+        System.out.println("Enter the folder to scan for duplicates:");
     }
 
     public String getUserPath() {

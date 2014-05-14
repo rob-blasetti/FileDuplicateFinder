@@ -11,47 +11,30 @@ import java.util.Map;
  */
 public class DuplicateFinderDeleteProcessor implements DuplicateFinderProcessor {
 
-    private FileClassifierBySize2 fileClassifierBySize2;
-    private FileContentComparer fileContentComparer;
+    private FileDeleter fileDeleter;
     private Outputter outputter;
-    private DeleteFile deleteFile;
 
-    public DuplicateFinderDeleteProcessor(Outputter outputter, FileClassifierBySize2 fileClassifierBySize, FileContentComparer fileContentComparer, DeleteFile deleteFile) {
-        this.fileClassifierBySize2 = fileClassifierBySize;
-        this.fileContentComparer = fileContentComparer;
+    public DuplicateFinderDeleteProcessor(FileDeleter fileDeleter, Outputter outputter) {
+
+        this.fileDeleter = fileDeleter;
         this.outputter = outputter;
-        this.deleteFile = deleteFile;
     }
 
+
     @Override
-    public void execute(String pathToScan) throws FileNotFoundException {
-
-        Map<String, ArrayList<String>> dictionaryOfFileClassifiedBySize = fileClassifierBySize2.scanDirectory(pathToScan);
-
-        for (String key : dictionaryOfFileClassifiedBySize.keySet()) {
-
-            ArrayList<String> arrayListOfPath = dictionaryOfFileClassifiedBySize.get(key);
-            HashMap<String, ArrayList<String>> dictionaryOfDuplicateFiles =
-                    fileContentComparer.compareFiles(arrayListOfPath.toArray(new String[arrayListOfPath.size()]));
-
-            HashMap<String, ArrayList<String>> dictionaryOfRemainFiles = new HashMap<String, ArrayList<String>>();
-
-            if (dictionaryOfDuplicateFiles != null) {
-                for (String hashKey : dictionaryOfDuplicateFiles.keySet()) {
-
-                    ArrayList<String> filePaths = dictionaryOfDuplicateFiles.get(hashKey);
-
-                    ArrayList<String> deleteList = new ArrayList<String>();
-                    deleteList.add(filePaths.get(0));
-                    dictionaryOfRemainFiles.put(hashKey, deleteList);
-
-                    for (int i = 1; i < filePaths.size(); i++) {
-                        deleteFile.delete(new File(filePaths.get(i)));
+    public void execute(HashMap<String, ArrayList<String>> dictionaryOfDuplicateFiles) throws FileNotFoundException {
+        StringBuilder result = new StringBuilder();
+        if (dictionaryOfDuplicateFiles != null) {
+            for (String hashKey : dictionaryOfDuplicateFiles.keySet()) {
+                ArrayList<String> filePaths = dictionaryOfDuplicateFiles.get(hashKey);
+                for (int i = 1; i < filePaths.size(); i++) {
+                    if (fileDeleter.delete(new File(filePaths.get(i)))) {
+                        result.append(filePaths.get(i));
+                        result.append("\n");
                     }
                 }
-                String result = new StringFormatter().formatData(dictionaryOfRemainFiles);
-                outputter.writeLine(result);
             }
         }
+        outputter.writeLine(result.toString());
     }
 }
